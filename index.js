@@ -16,8 +16,10 @@
 const { Readable, Writable, Duplex } = require('stream');
 const portAudioBindings = require("bindings")("naudiodon.node");
 
-const { register } = require('node-segfault-handler-rs');
-register();
+if (process.platform === 'darwin' || process.platform === 'linux') {
+  const { register } = require('node-segfault-handler-rs');
+  register();
+}
 
 exports.SampleFormatFloat32 = 1;
 exports.SampleFormat8Bit = 8;
