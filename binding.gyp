@@ -56,6 +56,7 @@
                 [
                     'OS=="win"',
                     {
+                        "include_dirs": ["portaudio/include"],
                         "configurations": {
                             "Release": {
                                 "msvs_settings": {
