@@ -96,6 +96,11 @@ jobs:
 
     - name: Prepare binaries for publishing
       run: |
+        # Debug: Show what we downloaded
+        echo "=== Downloaded artifacts ==="
+        ls -la build/
+        echo ""
+        
         # Create the staging directory structure
         mkdir -p "build/stage/naudiodon2/v2.4.2/"
         
@@ -106,7 +111,9 @@ jobs:
             # Extract platform-arch from artifact name
             # Format: binary-{platform}-{arch}-node{version}.tar.gz
             filename=$(basename "$artifact")
+            echo "Filename: $filename"
             platform_arch=$(echo "$filename" | sed 's/binary-\(.*\)-node.*\.tar\.gz/\1/')
+            echo "Platform-arch: $platform_arch"
             
             # Copy to the expected location for node-pre-gyp
             cp "$artifact" "build/stage/naudiodon2/v2.4.2/node-v93-${platform_arch}.tar.gz"
@@ -115,8 +122,18 @@ jobs:
         done
         
         # List what we have
-        echo "Available binaries:"
+        echo ""
+        echo "=== Available binaries ==="
         ls -la build/stage/naudiodon2/v2.4.2/
+        
+        # Debug: Check if the specific file exists
+        echo ""
+        echo "=== Checking for specific file ==="
+        if [ -f "build/stage/naudiodon2/v2.4.2/node-v93-linux-x64.tar.gz" ]; then
+          echo "✅ node-v93-linux-x64.tar.gz exists"
+        else
+          echo "❌ node-v93-linux-x64.tar.gz missing"
+        fi
 
     - name: Publish binaries
       run: npm run publish-binary
