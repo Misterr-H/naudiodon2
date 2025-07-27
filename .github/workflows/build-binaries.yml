@@ -107,8 +107,13 @@ jobs:
         
         # Create the staging directory structure
         mkdir -p "build/stage/naudiodon2/v2.4.2/"
+        echo "Created staging directory: build/stage/naudiodon2/v2.4.2/"
         
         # Find all tar.gz files in subdirectories and process them
+        echo "=== Searching for tar.gz files ==="
+        find build/ -name "*.tar.gz" -type f
+        echo ""
+        
         find build/ -name "*.tar.gz" -type f | while read artifact; do
           echo "Processing artifact: $artifact"
           # Extract platform-arch from artifact name
@@ -134,6 +139,11 @@ jobs:
         else
           echo "❌ node-v93-linux-x64.tar.gz missing"
         fi
+        
+        # Debug: Show the final staging directory structure
+        echo ""
+        echo "=== Final staging directory structure ==="
+        find build/stage/ -type f
 
     - name: Publish binaries
       run: npm run publish-binary
