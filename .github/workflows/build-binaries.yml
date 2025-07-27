@@ -13,19 +13,19 @@ jobs:
           - os: ubuntu-latest
             platform: linux
             arch: x64
-            node-version: '22'
+            node-version: '16'
           - os: ubuntu-latest
             platform: linux
             arch: arm64
-            node-version: '22'
+            node-version: '16'
           - os: macos-14
             platform: darwin
             arch: arm64
-            node-version: '22'
+            node-version: '16'
           - os: windows-latest
             platform: win32
             arch: x64
-            node-version: '22'
+            node-version: '16'
 
     steps:
     - name: Checkout code
@@ -82,7 +82,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22'
+        node-version: '16'
         cache: 'npm'
 
     - name: Install dependencies
