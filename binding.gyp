@@ -71,6 +71,7 @@
                 [
                     'OS=="linux"',
                     {
+                        "include_dirs": ["portaudio/include"],
                         "conditions": [
                             [
                                 'target_arch=="arm"',
