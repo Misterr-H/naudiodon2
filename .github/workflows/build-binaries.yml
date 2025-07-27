@@ -18,11 +18,7 @@ jobs:
             platform: linux
             arch: arm64
             node-version: '20'
-          - os: macos-latest
-            platform: darwin
-            arch: x64
-            node-version: '20'
-          - os: macos-latest
+          - os: macos-14
             platform: darwin
             arch: arm64
             node-version: '20'
@@ -49,6 +45,13 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
+
+    - name: Debug info
+      run: |
+        echo "Node version: $(node --version)"
+        echo "Platform: ${{ matrix.platform }}"
+        echo "Arch: ${{ matrix.arch }}"
+        echo "Node version: ${{ matrix.node-version }}"
 
     - name: Build binary
       run: |
