@@ -24,12 +24,24 @@
     "node-segfault-handler-rs": "^1.1.2"
   },
   "devDependencies": {
-    "@types/node": "^16.11.7"
+    "@types/node": "^16.11.7",
+    "@mapbox/node-pre-gyp": "^1.0.10"
   },
   "author": "Streampunk Media Ltd",
   "license": "Apache-2.0",
   "scripts": {
-    "install": "node-gyp rebuild"
+    "install": "node ./node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp install --fallback-to-build",
+    "build": "node-gyp rebuild",
+    "package": "node ./node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp package",
+    "publish-binary": "node ./node_modules/@mapbox/node-pre-gyp/bin/node-pre-gyp publish",
+    "build-all": "node scripts/build-binaries.js"
   },
-  "gypfile": true
+  "gypfile": true,
+  "binary": {
+    "module_name": "naudiodon",
+    "module_path": "./build/Release/",
+    "remote_path": "./{name}/v{version}/",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://github.com/Streampunk/naudiodon/releases/download/"
+  }
 }

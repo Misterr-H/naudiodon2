@@ -15,11 +15,37 @@ Note: This is a server side library. It is not intended as a means to play and r
 
 ## Installation
 
-Install [Node.js](http://nodejs.org/) for your platform and make sure that node is able to build native modules with [node-gyp](https://github.com/nodejs/node-gyp). This software has been developed against the long term stable (LTS) release. For ease of installation with other node packages, this package includes a copy of the dependent PortAudio library and so has no prerequisites.
+### Automatic Binary Installation (Recommended)
+
+This package now uses `node-pre-gyp` to automatically download pre-compiled binaries for your platform. This means you don't need to have `node-gyp` or a C++ compiler installed on your machine.
+
+Simply install the package:
+
+```bash
+npm install naudiodon2
+```
+
+The package will automatically download the appropriate binary for your platform and Node.js version.
+
+### Manual Build (Fallback)
+
+If no pre-compiled binary is available for your platform, or if you prefer to build from source, you can still do so by having [Node.js](http://nodejs.org/) and [node-gyp](https://github.com/nodejs/node-gyp) installed on your platform.
+
+```bash
+npm install naudiodon2 --build-from-source
+```
+
+### Supported Platforms
+
+Pre-compiled binaries are available for:
+- **macOS**: x64 and arm64 (Apple Silicon)
+- **Linux**: x64, arm64, and arm (Raspberry Pi)
+- **Windows**: x64 and ia32
+- **Node.js versions**: 16, 18, and 20
 
 Naudiodon is designed to be `require`d to use from your own application to provide async processing. For example:
 
-    npm install nextliveab/naudiodon2
+    npm install naudiodon2
 
 For Raspberry Pi users, please note that this library is not intended for use with the internal sound card. Please use an external USB sound card or GPIO breakout board such as the [_Pi-DAC+ Full-HD Audio Card_](https://www.modmypi.com/raspberry-pi/breakout-boards/iqaudio/pi-dac-plus-full-hd-audio-card/?tag=pi-dac).
 
