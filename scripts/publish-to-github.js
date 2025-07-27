@@ -24,17 +24,27 @@ async function publishToGitHub() {
   // Find the release
   let release;
   try {
+    console.log(`Looking for releases in ${owner}/${repo}...`);
     const releases = await octokit.repos.listReleases({
       owner,
       repo
     });
+    console.log(`Found ${releases.data.length} releases:`);
+    releases.data.forEach(r => console.log(`  - ${r.tag_name} (${r.name})`));
+    
     release = releases.data.find(r => r.tag_name === `v${version}`);
   } catch (error) {
     console.error('Error finding release:', error.message);
+    if (error.status === 404) {
+      console.error(`Repository ${owner}/${repo} not found or not accessible`);
+    }
     throw error;
   }
 
   if (!release) {
+    console.error(`Release v${version} not found. Available releases:`);
+    const releases = await octokit.repos.listReleases({ owner, repo });
+    releases.data.forEach(r => console.log(`  - ${r.tag_name} (${r.name})`));
     throw new Error(`Release v${version} not found. Please create a release first.`);
   }
 
