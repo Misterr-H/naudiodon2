@@ -16,7 +16,7 @@ const platforms = [
 ];
 
 // Node.js versions to build for
-const nodeVersions = ['16', '18', '20'];
+const nodeVersions = ['20'];
 
 function runCommand(command, options = {}) {
   console.log(`Running: ${command}`);

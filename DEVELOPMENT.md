@@ -4,7 +4,7 @@ This guide explains how to build and publish binaries for naudiodon2 using `node
 
 ## Prerequisites
 
-- Node.js 16+ installed
+- Node.js 20+ installed
 - Git access to the repository
 - GitHub access for publishing releases
 
@@ -32,7 +32,7 @@ This will build binaries for:
 - macOS (x64, arm64)
 - Linux (x64, arm64, arm)
 - Windows (x64, ia32)
-- Node.js versions 16, 18, 20
+- Node.js versions 20
 
 ## Publishing Binaries
 

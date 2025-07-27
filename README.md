@@ -41,7 +41,7 @@ Pre-compiled binaries are available for:
 - **macOS**: x64 and arm64 (Apple Silicon)
 - **Linux**: x64, arm64, and arm (Raspberry Pi)
 - **Windows**: x64 and ia32
-- **Node.js versions**: 16, 18, and 20
+- **Node.js versions**: 20
 
 Naudiodon is designed to be `require`d to use from your own application to provide async processing. For example:
 
