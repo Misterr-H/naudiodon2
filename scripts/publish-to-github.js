@@ -50,8 +50,8 @@ async function publishToGitHub() {
 
   console.log(`Found release: ${release.name} (${release.id})`);
 
-  // Find all binary files in the staging directory
-  const stagingDir = path.join('build', 'stage', 'naudiodon2', version);
+                // Find all binary files in the staging directory
+              const stagingDir = path.join('build', 'stage', 'naudiodon2', `v${version}`);
   if (!fs.existsSync(stagingDir)) {
     throw new Error(`Staging directory not found: ${stagingDir}`);
   }
