@@ -17,7 +17,7 @@ async function publishToGitHub() {
   // Read package.json to get version and repository info
   const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
   const version = packageJson.version;
-  const [owner, repo] = packageJson.repository.url.match(/github\.com\/([^\/]+)\/([^\/]+)/).slice(1);
+  const [owner, repo] = packageJson.repository.url.match(/github\.com\/([^\/]+)\/([^\/]+?)(?:\.git)?$/).slice(1);
 
   console.log(`Publishing binaries for ${owner}/${repo} version ${version}`);
 
