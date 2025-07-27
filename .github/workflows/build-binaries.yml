@@ -94,6 +94,11 @@ jobs:
       with:
         path: build/
 
+    - name: Build and package for all platforms
+      run: |
+        # Build and package for all supported platforms
+        npm run build-all
+
     - name: Publish binaries
       run: npm run publish-binary
       env:
