@@ -42,6 +42,7 @@
     "module_path": "./build/Release/",
     "remote_path": "./{name}/v{version}/",
     "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://github.com/Misterr-H/naudiodon2/releases/download/"
+    "host": "https://github.com/Misterr-H/naudiodon2/releases/download/",
+    "provider": "github"
   }
 }
