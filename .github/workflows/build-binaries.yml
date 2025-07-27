@@ -94,10 +94,29 @@ jobs:
       with:
         path: build/
 
-    - name: Build and package for all platforms
+    - name: Prepare binaries for publishing
       run: |
-        # Build and package for all supported platforms
-        npm run build-all
+        # Create the staging directory structure
+        mkdir -p "build/stage/naudiodon2/v2.4.2/"
+        
+        # Copy and rename artifacts to the expected location
+        for artifact in build/*.tar.gz; do
+          if [ -f "$artifact" ]; then
+            echo "Processing artifact: $artifact"
+            # Extract platform-arch from artifact name
+            # Format: binary-{platform}-{arch}-node{version}.tar.gz
+            filename=$(basename "$artifact")
+            platform_arch=$(echo "$filename" | sed 's/binary-\(.*\)-node.*\.tar\.gz/\1/')
+            
+            # Copy to the expected location for node-pre-gyp
+            cp "$artifact" "build/stage/naudiodon2/v2.4.2/node-v93-${platform_arch}.tar.gz"
+            echo "Copied to: build/stage/naudiodon2/v2.4.2/node-v93-${platform_arch}.tar.gz"
+          fi
+        done
+        
+        # List what we have
+        echo "Available binaries:"
+        ls -la build/stage/naudiodon2/v2.4.2/
 
     - name: Publish binaries
       run: npm run publish-binary
