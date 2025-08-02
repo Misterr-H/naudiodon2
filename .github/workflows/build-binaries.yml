@@ -56,6 +56,7 @@ jobs:
       run: npm ci --ignore-engines
 
     - name: Update version for build
+      shell: bash
       run: |
         # Extract version from tag (remove 'v' prefix)
         VERSION=${GITHUB_REF#refs/tags/}
