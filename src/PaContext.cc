@@ -61,11 +61,12 @@ PaContext::PaContext(napi_env env, napi_value inOptions, napi_value outOptions)
     return;
   }    
 
-  printf("%s\n", Pa_GetVersionInfo()->versionText);
+  // printf("%s\n", Pa_GetVersionInfo()->versionText);
   if (mInOptions)
     printf("Input %s\n", mInOptions->toString().c_str());
   if (mOutOptions)
-    printf("Output %s\n", mOutOptions->toString().c_str());
+    // printf("Output %s\n", mOutOptions->toString().c_str());
+    // do nothing
 
   double sampleRate;
   PaStreamParameters inParams;
@@ -257,7 +258,7 @@ void PaContext::setParams(napi_env env, bool isInput,
     return;
   }  
 
-  printf("%s device name is %s\n", isInput?"Input":"Output", Pa_GetDeviceInfo(params.device)->name);
+  // printf("%s device name is %s\n", isInput?"Input":"Output", Pa_GetDeviceInfo(params.device)->name);
 
   params.channelCount = options->channelCount();
   int maxChannels = isInput ? Pa_GetDeviceInfo(params.device)->maxInputChannels : Pa_GetDeviceInfo(params.device)->maxOutputChannels;

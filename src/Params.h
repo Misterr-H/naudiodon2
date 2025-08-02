@@ -130,7 +130,8 @@ public:
     ss << "max queue " << mMaxQueue << ", ";
     ss << "frames per buffer " << mFramesPerBuffer << ", ";
     ss << "close on error " << (mCloseOnError ? "true" : "false");
-    return ss.str();
+    // return ss.str();
+    return "";
   }
 
 private:
