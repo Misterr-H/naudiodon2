@@ -55,29 +55,10 @@ jobs:
     - name: Install dependencies
       run: npm ci --ignore-engines
 
-    - name: Update version for build
-      shell: bash
-      run: |
-        # Extract version from tag (remove 'v' prefix)
-        VERSION=${GITHUB_REF#refs/tags/}
-        VERSION=${VERSION#v}
-        echo "Building for version: $VERSION"
-        # Update package.json version (only if different)
-        CURRENT_VERSION=$(node -p "require('./package.json').version")
-        if [ "$CURRENT_VERSION" != "$VERSION" ]; then
-          npm version $VERSION --no-git-tag-version
-        else
-          echo "Version already set to $VERSION, skipping update"
-        fi
-
     - name: Build binary
       run: |
         npm run build
         npm run package
-        echo "=== Build artifacts ==="
-        find build/ -name "*.tar.gz" -type f
-        echo "=== Package.json version ==="
-        cat package.json | grep '"version"'
       env:
         npm_config_target: ${{ matrix.node-version }}
         npm_config_arch: ${{ matrix.arch }}
@@ -87,7 +68,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: binary-${{ matrix.platform }}-${{ matrix.arch }}-node${{ matrix.node-version }}
-        path: build/stage/naudiodon2/*/*.tar.gz
+        path: build/stage/naudiodon2/v2.4.4/*.tar.gz
 
   publish:
     needs: build
@@ -112,21 +93,6 @@ jobs:
     - name: Install dependencies
       run: npm ci --ignore-engines
 
-    - name: Update version for publish
-      shell: bash
-      run: |
-        # Extract version from tag (remove 'v' prefix)
-        VERSION=${GITHUB_REF#refs/tags/}
-        VERSION=${VERSION#v}
-        echo "Publishing for version: $VERSION"
-        # Update package.json version (only if different)
-        CURRENT_VERSION=$(node -p "require('./package.json').version")
-        if [ "$CURRENT_VERSION" != "$VERSION" ]; then
-          npm version $VERSION --no-git-tag-version
-        else
-          echo "Version already set to $VERSION, skipping update"
-        fi
-
     - name: Download all artifacts
       uses: actions/download-artifact@v4
       with:
@@ -140,8 +106,8 @@ jobs:
         echo ""
         
         # Create the staging directory structure
-        mkdir -p "build/stage/naudiodon2/${{ github.event.release.tag_name }}/"
-        echo "Created staging directory: build/stage/naudiodon2/${{ github.event.release.tag_name }}/"
+        mkdir -p "build/stage/naudiodon2/v2.4.4/"
+        echo "Created staging directory: build/stage/naudiodon2/v2.4.4/"
         
         # Find all tar.gz files in subdirectories and process them
         echo "=== Searching for tar.gz files ==="
@@ -156,19 +122,19 @@ jobs:
           echo "Filename: $filename"
           
           # Just copy the file directly since it's already named correctly
-          cp "$artifact" "build/stage/naudiodon2/${{ github.event.release.tag_name }}/$filename"
-          echo "Copied to: build/stage/naudiodon2/${{ github.event.release.tag_name }}/$filename"
+          cp "$artifact" "build/stage/naudiodon2/v2.4.4/$filename"
+          echo "Copied to: build/stage/naudiodon2/v2.4.4/$filename"
         done
         
         # List what we have
         echo ""
         echo "=== Available binaries ==="
-        ls -la build/stage/naudiodon2/${{ github.event.release.tag_name }}/
+        ls -la build/stage/naudiodon2/v2.4.4/
         
         # Debug: Check if the specific file exists
         echo ""
         echo "=== Checking for specific file ==="
-        if [ -f "build/stage/naudiodon2/${{ github.event.release.tag_name }}/node-v93-linux-x64.tar.gz" ]; then
+        if [ -f "build/stage/naudiodon2/v2.4.4/node-v93-linux-x64.tar.gz" ]; then
           echo "✅ node-v93-linux-x64.tar.gz exists"
         else
           echo "❌ node-v93-linux-x64.tar.gz missing"
