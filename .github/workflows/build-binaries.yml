@@ -68,7 +68,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: binary-${{ matrix.platform }}-${{ matrix.arch }}-node${{ matrix.node-version }}
-        path: build/stage/naudiodon2/v2.4.3/*.tar.gz
+        path: build/stage/naudiodon2/${{ github.event.release.tag_name }}/*.tar.gz
 
   publish:
     needs: build
@@ -106,8 +106,8 @@ jobs:
         echo ""
         
         # Create the staging directory structure
-        mkdir -p "build/stage/naudiodon2/v2.4.3/"
-        echo "Created staging directory: build/stage/naudiodon2/v2.4.3/"
+        mkdir -p "build/stage/naudiodon2/${{ github.event.release.tag_name }}/"
+        echo "Created staging directory: build/stage/naudiodon2/${{ github.event.release.tag_name }}/"
         
         # Find all tar.gz files in subdirectories and process them
         echo "=== Searching for tar.gz files ==="
@@ -122,19 +122,19 @@ jobs:
           echo "Filename: $filename"
           
           # Just copy the file directly since it's already named correctly
-          cp "$artifact" "build/stage/naudiodon2/v2.4.3/$filename"
-          echo "Copied to: build/stage/naudiodon2/v2.4.3/$filename"
+          cp "$artifact" "build/stage/naudiodon2/${{ github.event.release.tag_name }}/$filename"
+          echo "Copied to: build/stage/naudiodon2/${{ github.event.release.tag_name }}/$filename"
         done
         
         # List what we have
         echo ""
         echo "=== Available binaries ==="
-        ls -la build/stage/naudiodon2/v2.4.3/
+        ls -la build/stage/naudiodon2/${{ github.event.release.tag_name }}/
         
         # Debug: Check if the specific file exists
         echo ""
         echo "=== Checking for specific file ==="
-        if [ -f "build/stage/naudiodon2/v2.4.3/node-v93-linux-x64.tar.gz" ]; then
+        if [ -f "build/stage/naudiodon2/${{ github.event.release.tag_name }}/node-v93-linux-x64.tar.gz" ]; then
           echo "✅ node-v93-linux-x64.tar.gz exists"
         else
           echo "❌ node-v93-linux-x64.tar.gz missing"
