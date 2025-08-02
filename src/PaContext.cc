@@ -64,9 +64,10 @@ PaContext::PaContext(napi_env env, napi_value inOptions, napi_value outOptions)
   // printf("%s\n", Pa_GetVersionInfo()->versionText);
   if (mInOptions)
     printf("Input %s\n", mInOptions->toString().c_str());
-  if (mOutOptions)
+  if (mOutOptions) {
     // printf("Output %s\n", mOutOptions->toString().c_str());
     // do nothing
+  }
 
   double sampleRate;
   PaStreamParameters inParams;
