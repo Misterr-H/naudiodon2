@@ -62,8 +62,13 @@ jobs:
         VERSION=${GITHUB_REF#refs/tags/}
         VERSION=${VERSION#v}
         echo "Building for version: $VERSION"
-        # Update package.json version
-        npm version $VERSION --no-git-tag-version
+        # Update package.json version (only if different)
+        CURRENT_VERSION=$(node -p "require('./package.json').version")
+        if [ "$CURRENT_VERSION" != "$VERSION" ]; then
+          npm version $VERSION --no-git-tag-version
+        else
+          echo "Version already set to $VERSION, skipping update"
+        fi
 
     - name: Build binary
       run: |
@@ -114,8 +119,13 @@ jobs:
         VERSION=${GITHUB_REF#refs/tags/}
         VERSION=${VERSION#v}
         echo "Publishing for version: $VERSION"
-        # Update package.json version
-        npm version $VERSION --no-git-tag-version
+        # Update package.json version (only if different)
+        CURRENT_VERSION=$(node -p "require('./package.json').version")
+        if [ "$CURRENT_VERSION" != "$VERSION" ]; then
+          npm version $VERSION --no-git-tag-version
+        else
+          echo "Version already set to $VERSION, skipping update"
+        fi
 
     - name: Download all artifacts
       uses: actions/download-artifact@v4
