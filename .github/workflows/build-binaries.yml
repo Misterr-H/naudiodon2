@@ -71,7 +71,7 @@ jobs:
         echo "=== Build artifacts ==="
         find build/ -name "*.tar.gz" -type f
         echo "=== Package.json version ==="
-        npm run --silent version
+        cat package.json | grep '"version"'
       env:
         npm_config_target: ${{ matrix.node-version }}
         npm_config_arch: ${{ matrix.arch }}
