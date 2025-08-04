@@ -9,11 +9,14 @@ function install() {
   
   // Check if node-pre-gyp is available
   const nodePreGypPath = path.join(__dirname, '..', 'node_modules', '@mapbox', 'node-pre-gyp', 'bin', 'node-pre-gyp');
+  const nodePreGypCmdPath = path.join(__dirname, '..', 'node_modules', '@mapbox', 'node-pre-gyp', 'bin', 'node-pre-gyp.cmd');
   
-  if (fs.existsSync(nodePreGypPath)) {
+  if (fs.existsSync(nodePreGypPath) || fs.existsSync(nodePreGypCmdPath)) {
     console.log('node-pre-gyp found, attempting to install binary...');
     try {
-      execSync(`node "${nodePreGypPath}" install --fallback-to-build`, { 
+      // Use the appropriate path for the platform
+      const executablePath = fs.existsSync(nodePreGypPath) ? nodePreGypPath : nodePreGypCmdPath;
+      execSync(`node "${executablePath}" install --fallback-to-build`, { 
         stdio: 'inherit',
         cwd: path.join(__dirname, '..')
       });
